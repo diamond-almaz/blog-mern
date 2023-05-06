@@ -7,12 +7,6 @@ import { Request, Response } from 'express';
 
 export const register = async (req: Request, res: Response) => {
   try {
-   const errors = validationResult(req);
- 
-   if (!errors.isEmpty()) {
-     return res.status(400).json(errors.array());
-   }
- 
    const {
      email,
      fullName,
