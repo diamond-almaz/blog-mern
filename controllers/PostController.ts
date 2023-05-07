@@ -2,6 +2,21 @@ import { Request, Response } from "express";
 import { title } from "process";
 import PostModel from '../models/post';
 
+export const getLastTags = async (req: any, res: Response) => {
+  try {
+    const posts = await PostModel.find().limit(5).exec();
+
+    const tags = posts.map((item) => item.tags).flat().slice(0, 5)
+
+    res.json(tags)
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: 'Не удалось получить статьи'
+    })
+  }
+}
+
 export const getAll = async (req: any, res: Response) => {
   try {
     const posts = await PostModel.find().populate('user').exec();
@@ -30,7 +45,7 @@ export const getOne = async (req: any, res: Response) => {
       {
         returnDocument: 'after',
       },
-    );
+    ).populate('user');
 
     res.json(post);
   } catch (error) {
@@ -50,7 +65,7 @@ export const create = async (req: any, res: Response) => {
     const doc = new PostModel({
       title,
       text,
-      tags,
+      tags: tags.split(','),
       imageUrl,
       user: req.userId,
     })

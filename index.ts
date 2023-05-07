@@ -42,12 +42,13 @@ app.post('/auth/login',  Validations.loginValidation, handleValidationsErrors, U
 app.post('/auth/register', Validations.registerValidation, handleValidationsErrors, UserController.register)
 app.get('/auth/me', checkAuth, UserController.getMe) 
 
-app.post('/uploads', checkAuth, upload.single('image'), (req, res) => {
+app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
   res.json({
     url: '/uploads/' + req.file?.originalname
   })
 })
 
+app.get('/tags', PostController.getLastTags)
 app.get('/posts', PostController.getAll)
 app.get('/posts/:id', PostController.getOne)
 app.post('/posts', checkAuth, Validations.postCreateValidation, PostController.create)
