@@ -7,7 +7,8 @@ import * as Validations from './validations';
 import {UserController, PostController } from './controllers';
 import {checkAuth, handleValidationsErrors} from './utils';
 
-mongoose.connect('mongodb+srv://diamondsharipov:wwwwww@cluster0.4j6xniy.mongodb.net/blog?retryWrites=true&w=majority')
+// @ts-ignore
+mongoose.connect(process.env.MONGODB_URI)
 .then(() => {
   console.log('DB OK')
 })
