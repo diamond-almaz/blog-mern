@@ -2,10 +2,13 @@ import express from 'express';
 import mongoose from 'mongoose';
 import multer from 'multer';
 import cors from 'cors';
+import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 
 import * as Validations from './validations';
 import {UserController, PostController } from './controllers';
 import {checkAuth, handleValidationsErrors} from './utils';
+
+dotenv.config()
 
 // @ts-ignore
 mongoose.connect(process.env.MONGODB_URI)
